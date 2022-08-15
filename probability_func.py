@@ -1,6 +1,10 @@
 import tkinter as tk
 from typing import Optional
 
+class Wrap(tk.Label):
+    """Pretty much tk.Label - when creating a Label it presets new bg and fg color and a new font."""
+    def __init__(self, root, text) -> tk.Label:
+        super().__init__(root, bg="#323232", fg="#f0f0f0", font=("helvetica", 9, "normal"), text=text)
 
 class Probability:
     def __init__(self, e_success, e_tries, e_step, root) -> None:
@@ -41,7 +45,7 @@ class Probability:
 
         FINAL_PROB = 0 if self.tries == 0 else round((1 - product) * 100, 2)
         
-        self.label = tk.Label(self.root, bg="#323232", fg="#f0f0f0", font=("helvetica", 9, "normal"), text=f"Probability of success: {FINAL_PROB}%")
+        self.label = Wrap(self.root, text=f"Probability of success: {FINAL_PROB}%")
         self.label.grid(row=5, column = 1)
         print(f"Probability of success: {FINAL_PROB}%")
 
@@ -89,7 +93,7 @@ class Tries:
             product *= prob_of_loss - incr * (self.step / 100)
             tries += 1
 
-        self.label = tk.Label(self.root, bg="#323232", fg="#f0f0f0", font=("helvetica", 9, "normal"), text=f"You need {tries} tries to have above {self.prob}% chance of success.")
+        self.label = Wrap(self.root, text=f"You need {tries} tries to have above {self.prob}% chance of success.")
         self.label.grid(row=5, column = 3)
         print(f"You need {tries} tries to have above {self.prob}% chance of success.")
         return tries
